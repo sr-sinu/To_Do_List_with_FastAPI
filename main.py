@@ -1,58 +1,57 @@
-from fastapi import HTTPException, FastAPI
-from pydantic import BaseModel
-from typing import List
+from fastapi import HTTPException, FastAPI, Depends
+from sqlalchemy.orm import Session
+import models, schemas, crud
+from database import SessionLocal, engine
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-#In memory Database
-todos = []
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-#Pydentic model
-class Todo(BaseModel):
-    id: int
-    title: str
-    completed: bool=False
 
 #Root Value
 @app.get("/")
 def read_root():
-      return {"messege":"Welcome to FastAPI To-Do App"}
+      return {"message":"Welcome to FastAPI + SQLite To-Do App"}
 
 #Get all todos
-@app.get("/todos", response_model = List[Todo])
-def get_todos():
-    return todos
+@app.get("/todos", response_model = list[schemas.Todo])
+def get_todos(db: Session = Depends(get_db)):
+    return crud.get_todos(db)
 
 # Get one todo
-@app.get("/todos/{todo_id}")
-def get_todo(todo_id: int):
-    for todo in todos:
-        if todo.id == todo_id:
-            return todo
-    raise HTTPException(status_code=404, detail="Todo not found")
-
+@app.get("/todos/{todo_id}", response_model=schemas.Todo)
+def get_todo(todo_id: int, db: Session = Depends(get_db)):
+    todo = crud.get_todo(db, todo_id)
+    if not todo:
+        raise HTTPException(status_code=404, detail="Todo not found")
+    return todo
 
 #Create a todo
-@app.post("/todos",response_model=Todo)
-def create_to_do(todo: Todo):
-    todos.append(todo)
-    return todo
+@app.post("/todos",response_model=schemas.Todo)
+def create_to_do(todo: schemas.Todocreate, db: Session = Depends(get_db)):
+    return crud.create_todo(db, todo)
 
 
 #Update a todo
-@app.put("/todos/{todo_id}")
-def update_todo(todo_id:int, updated: Todo):
-    for index, todo in enumerate(todos):
-        if todo.id == todo_id:
-            todos[index] = updated
-            return updated
-    raise HTTPException(status_code=404, detail="Todo not found")
+@app.put("/todos/{todo_id}", response_model=schemas.Todo)
+def update_todo(todo_id:int, updated: schemas.Todocreate, db: Session = Depends(get_db)):
+    todo = crud.get_todo(db, todo_id)
+    if not todo:
+        raise HTTPException(status_code=404, detail="Todo not found")
+    return crud.update_todo(db, todo_id, updated)
 	
 #Delete a todo
 @app.delete("/todos/{todo_id}")
-def delete_todo(todo_id:int):
-	for index, todo in enumerate(todos):
-		if todo.id == todo_id:
-			todos.pop(index)
-			return {"messege":"Deleted Sucessfully"}
-	raise HTTPException(status_code = 404, detail="Todo not found")
+def delete_todo(todo_id:int, db: Session=Depends(get_db)):
+    todo = crud.get_todo(db, todo_id)
+    if not todo:
+        raise HTTPException(status_code=404, detail="Todo not found")
+    crud.delete_todo(db, todo_id)
+    return {"message": "Todo deleted successfully"}
