@@ -1,28 +1,29 @@
-# 🚀 FastAPI To-Do API (SQLite + SQLAlchemy)
+# 🚀 FastAPI To-Do API (PostgreSQL + Docker)
 
-A simple and scalable REST API built with FastAPI, SQLite, and SQLAlchemy.
-This project demonstrates clean architecture, CRUD operations, and database integration.
+A production-ready REST API built with FastAPI, PostgreSQL, and Docker.
+This project demonstrates clean architecture, containerization, and real-world backend practices.
 
 ---
 
 ## 📌 Features
 
-* ✅ Create, Read, Update, Delete (CRUD) To-Do items
-* ✅ SQLite database integration
+* ✅ Full CRUD operations (Create, Read, Update, Delete)
+* ✅ PostgreSQL database integration
+* ✅ Dockerized application
 * ✅ SQLAlchemy ORM
 * ✅ Pydantic validation
-* ✅ Dependency Injection with FastAPI
+* ✅ Environment-based configuration
 * ✅ Auto-generated API docs
-* ✅ Update endpoint included
 
 ---
 
 ## 🛠️ Tech Stack
 
-* Python 3.10+
+* Python 3.11
 * FastAPI
+* PostgreSQL
 * SQLAlchemy
-* SQLite
+* Docker & Docker Compose
 * Uvicorn
 
 ---
@@ -30,58 +31,37 @@ This project demonstrates clean architecture, CRUD operations, and database inte
 ## 📁 Project Structure
 
 ```
-fastapi_app/
-│── main.py        # Entry point
-│── database.py    # Database connection
-│── models.py      # SQLAlchemy models
-│── schemas.py     # Pydantic schemas
-│── crud.py        # Database operations
+TO_DO_LIST_WITH_FASTAPI/
+│
+│── main.py
+│── database.py
+│── models.py
+│── schemas.py
+│── crud.py
+│
+│── docker-compose.yml
+│── Dockerfile
+│── requirements.txt
+│── .env
+│── README.md
+```
+---
+
+## 🐳 Run with Docker
+
+### 1. Build and start containers
+
+```
+docker-compose up --build
 ```
 
 ---
 
-## ⚙️ Installation
+### 2. Access the application
 
-### 1. Clone the repository
-
-```
-git clone https://github.com/your-username/fastapi-todo-app.git
-cd fastapi-todo-app
-```
-
-### 2. Create virtual environment (optional but recommended)
-
-```
-python -m venv venv
-source venv/bin/activate   # On Windows: venv\Scripts\activate
-```
-
-### 3. Install dependencies
-
-```
-pip install -r requirements.txt
-```
-
----
-
-## ▶️ Run the Application
-
-```
-uvicorn main:app --reload
-```
-
-App will be available at:
-
-* http://127.0.0.1:8000
-
----
-
-## 📚 API Documentation
-
-FastAPI provides built-in interactive docs:
-
-* Swagger UI: http://127.0.0.1:8000/docs
-* ReDoc: http://127.0.0.1:8000/redoc
+* API: http://localhost:8000
+* Swagger Docs: http://localhost:8000/docs
+* ReDoc: http://localhost:8000/redoc
 
 ---
 
@@ -110,7 +90,7 @@ Body:
 
 ```
 {
-  "title": "Learn FastAPI",
+  "title": "Learn Docker with FastAPI",
   "completed": false
 }
 ```
@@ -127,41 +107,47 @@ Body:
 
 ```
 {
-  "title": "Learn FastAPI deeply",
+  "title": "Master FastAPI + PostgreSQL",
   "completed": true
 }
 ```
 
 ---
 
-## 🧠 Learning Goals
+## 🧠 Learning Highlights
 
-This project helps you understand:
+* FastAPI backend development
+* PostgreSQL integration
+* Docker containerization
+* Clean project architecture
+* Environment-based configuration
 
-* FastAPI fundamentals
-* REST API design
-* Database integration with SQLAlchemy
-* Clean code structure
-* Backend project organization
+---
+
+## ⚠️ Important Notes
+
+* Use `db` as the database host inside Docker
+* Do not use `localhost` for database connection
+* Ensure Docker is running before starting the app
 
 ---
 
 ## 🚀 Future Improvements
 
-* 🔐 Authentication (JWT)
-* 🐳 Docker support
-* 🧪 Unit & integration tests
-* 📄 Environment configuration (.env)
-* 🐘 PostgreSQL support
+* 🔐 JWT Authentication
+* 🐳 Add pgAdmin (database UI)
+* 🔄 Alembic migrations
+* 🧪 Unit testing
+* ☁️ Deployment (AWS / Render / Railway)
 
 ---
 
 ## 🤝 Contributing
 
-Feel free to fork this repo and improve it. Contributions are welcome!
-
+Feel free to fork and improve this project. Contributions are welcome!
 
 ---
+
 
 ## 👨‍💻 Author
 
