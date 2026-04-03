@@ -1,7 +1,7 @@
 from fastapi import HTTPException, FastAPI, Depends
 from sqlalchemy.orm import Session
-import models, schemas, crud
-from database import SessionLocal, engine
+from app import models, schemas, crud
+from app.database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -18,7 +18,7 @@ def get_db():
 #Root Value
 @app.get("/")
 def read_root():
-      return {"message":"Welcome to FastAPI + SQLite To-Do App"}
+      return {"message":"Welcome to FastAPI + PostgreSQL To-Do App"}
 
 #Get all todos
 @app.get("/todos", response_model = list[schemas.Todo])

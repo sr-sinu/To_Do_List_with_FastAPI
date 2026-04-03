@@ -33,11 +33,12 @@ This project demonstrates clean architecture, containerization, and real-world b
 ```
 TO_DO_LIST_WITH_FASTAPI/
 │
-│── main.py
-│── database.py
-│── models.py
-│── schemas.py
-│── crud.py
+|──app/
+│   |── main.py
+│   |── database.py
+│   |── models.py
+│   |── schemas.py
+│   |── crud.py
 │
 │── docker-compose.yml
 │── Dockerfile
