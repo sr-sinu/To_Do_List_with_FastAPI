@@ -3,29 +3,33 @@ version: "3.9"
 services:
   db:
     image: postgres:alpine
-    container_name: postgres-db
-    restart: always
     env_file:
       - .env
-    ports:
-      - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      retries: 5
 
-  web:
-    build: .
+  backend:
+    build: ./backend
     container_name: fastapi-app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     ports:
       - "8000:8000"
     env_file:
       - .env
-    volumes:
-      - .:/app
-    command: >
-      sh -c "sleep 5 &&
-             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+  frontend:
+    build: ./frontend
+    container_name: react-app
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
 
 volumes:
   postgres_data:
