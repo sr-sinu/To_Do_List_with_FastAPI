@@ -1,246 +1,156 @@
-# 🚀 Full Stack To-Do Application
+# 🚀 FastAPI To-Do API (PostgreSQL + Docker)
 
-A full-stack To-Do application built with **FastAPI**, **React (Vite)**, **PostgreSQL**, and **Docker**. This project demonstrates how to build, containerize, and deploy a modern web application using industry-standard technologies.
+A production-ready REST API built with FastAPI, PostgreSQL, and Docker.
+This project demonstrates clean architecture, containerization, and real-world backend practices.
 
 ---
 
 ## 📌 Features
 
-### Backend
-- ✅ RESTful CRUD API using FastAPI
-- ✅ PostgreSQL database
-- ✅ SQLAlchemy ORM
-- ✅ Pydantic data validation
-- ✅ Environment variable configuration
-- ✅ Docker support
-- ✅ Interactive Swagger API documentation
-
-### Frontend
-- ✅ React + Vite
-- ✅ Axios for API communication
-- ✅ Create, Update and Delete Todos
-- ✅ Responsive component-based architecture
-- ✅ Docker support
+* ✅ Full CRUD operations (Create, Read, Update, Delete)
+* ✅ PostgreSQL database integration
+* ✅ Dockerized application
+* ✅ SQLAlchemy ORM
+* ✅ Pydantic validation
+* ✅ Environment-based configuration
+* ✅ Auto-generated API docs
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Backend
-- Python 3.11
-- FastAPI
-- SQLAlchemy
-- PostgreSQL
-- Uvicorn
-
-### Frontend
-- React
-- Vite
-- Axios
-- Nginx (Production)
-
-### DevOps
-- Docker
-- Docker Compose
+* Python 3.11
+* FastAPI
+* PostgreSQL
+* SQLAlchemy
+* Docker & Docker Compose
+* Uvicorn
 
 ---
 
-# 📁 Project Structure
+## 📁 Project Structure
 
 ```
-fullstack-todo-app/
+TO_DO_LIST_WITH_FASTAPI/
 │
-├── backend/
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── database.py
-│   │   ├── models.py
-│   │   ├── schemas.py
-│   │   └── crud.py
-│   │
-│   ├── requirements.txt
-│   └── Dockerfile
+|──app/
+│   |── main.py
+│   |── database.py
+│   |── models.py
+│   |── schemas.py
+│   |── crud.py
 │
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── TodoForm.jsx
-│   │   │   └── TodoItem.jsx
-│   │   │
-│   │   ├── pages/
-│   │   │   └── Home.jsx
-│   │   │
-│   │   ├── services/
-│   │   │   └── api.js
-│   │   │
-│   │   ├── App.jsx
-│   │   └── main.jsx
-│   │
-│   ├── public/
-│   ├── package.json
-│   ├── Dockerfile
-│   ├── nginx.conf
-│   └── .env
-│
-├── docker-compose.yml
-├── .env
-├── .gitignore
-└── README.md
+│── docker-compose.yml
+│── Dockerfile
+│── requirements.txt
+│── .env
+│── README.md
 ```
-
 ---
 
-# ⚙️ Environment Variables
+## 🐳 Run with Docker
 
-## Backend (.env)
+### 1. Build and start containers
 
-```env
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=password
-POSTGRES_DB=tododb
-DATABASE_URL=postgresql://postgres:password@db:5432/tododb
 ```
-
-## Frontend (.env)
-
-```env
-VITE_API_URL=http://localhost:8000
-```
-
----
-
-# 🐳 Running with Docker
-
-Build and start all services:
-
-```bash
 docker-compose up --build
 ```
 
-Services:
+---
 
-| Service | URL |
-|---------|-----|
-| Frontend | http://localhost:3000 |
-| Backend API | http://localhost:8000 |
-| Swagger UI | http://localhost:8000/docs |
+### 2. Access the application
+
+* API: http://localhost:8000
+* Swagger Docs: http://localhost:8000/docs
+* ReDoc: http://localhost:8000/redoc
 
 ---
 
-# 💻 Running Locally
+## 🔗 API Endpoints
 
-## Backend
+| Method | Endpoint    | Description     |
+| ------ | ----------- | --------------- |
+| GET    | /           | Root message    |
+| GET    | /todos      | Get all todos   |
+| GET    | /todos/{id} | Get single todo |
+| POST   | /todos      | Create todo     |
+| PUT    | /todos/{id} | Update todo     |
+| DELETE | /todos/{id} | Delete todo     |
 
-```bash
-cd backend
+---
 
-python -m venv venv
+## 📦 Example Request
 
-# Windows
-venv\Scripts\activate
+### Create Todo
 
-# Linux/Mac
-source venv/bin/activate
+```
+POST /todos
+```
 
-pip install -r requirements.txt
+Body:
 
-uvicorn app.main:app --reload
+```
+{
+  "title": "Learn Docker with FastAPI",
+  "completed": false
+}
 ```
 
 ---
 
-## Frontend
-
-```bash
-cd frontend
-
-npm install
-
-npm run dev
-```
-
-The React application will be available at:
+## 🔄 Update Todo
 
 ```
-http://localhost:5173
+PUT /todos/{id}
 ```
 
----
-
-# 📚 API Endpoints
-
-| Method | Endpoint | Description |
-|---------|----------|-------------|
-| GET | / | Health Check |
-| GET | /todos | Get All Todos |
-| GET | /todos/{id} | Get Todo |
-| POST | /todos | Create Todo |
-| PUT | /todos/{id} | Update Todo |
-| DELETE | /todos/{id} | Delete Todo |
-
----
-
-# 🌐 Deployment
-
-### Backend
-
-Deploy on Render.
-
-Update the `DATABASE_URL` environment variable using the PostgreSQL connection string provided by your hosting service.
-
-Example:
+Body:
 
 ```
-postgresql://username:password@hostname:5432/database_name
-```
-
-### Frontend
-
-Deploy on Vercel or Netlify.
-
-Set:
-
-```
-VITE_API_URL=https://your-backend.onrender.com
+{
+  "title": "Master FastAPI + PostgreSQL",
+  "completed": true
+}
 ```
 
 ---
 
-# 📖 What I Learned
+## 🧠 Learning Highlights
 
-- Building REST APIs using FastAPI
-- Database integration with PostgreSQL
-- SQLAlchemy ORM
-- React fundamentals
-- API integration using Axios
-- Docker and Docker Compose
-- Environment variable management
-- Full-stack application architecture
-- Deploying backend and frontend separately
+* FastAPI backend development
+* PostgreSQL integration
+* Docker containerization
+* Clean project architecture
+* Environment-based configuration
 
 ---
 
-# 🚀 Future Improvements
+## ⚠️ Important Notes
 
-- JWT Authentication
-- User Registration/Login
-- Alembic Database Migrations
-- Pagination
-- Search & Filtering
-- Unit Tests
-- GitHub Actions CI/CD
-- Kubernetes Deployment
+* Use `db` as the database host inside Docker
+* Do not use `localhost` for database connection
+* Ensure Docker is running before starting the app
 
 ---
 
-# 👨‍💻 Author
+## 🚀 Future Improvements
 
-**Your Name**
-
-GitHub: https://github.com/your-github-username
+* 🔐 JWT Authentication
+* 🐳 Add pgAdmin (database UI)
+* 🔄 Alembic migrations
+* 🧪 Unit testing
+* ☁️ Deployment (AWS / Render / Railway)
 
 ---
 
-## ⭐ Support
+## 🤝 Contributing
 
-If you found this project helpful, consider giving it a ⭐ on GitHub!
+Feel free to fork and improve this project. Contributions are welcome!
+
+---
+
+
+## 👨‍💻 Author
+
+Shrikant Shinde
+GitHub: https://github.com/sr-sinu
